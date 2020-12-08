@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="index.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <p class="heading">To-Do List</p>
+        <div id="projects">
+            <div id="main">
+                <h2 class="personal_tasks">Personal</h2>
+                <button type="button" id="add_task1">Add Task</button>
+                <textarea type="text" rows="3" id="content"></textarea>
+
+                <div id="personal">
+                    <div id = "1">
+                        <p id="p1">hello world1</p>
+                        <button type = "button" id= "finished">Incomplete</button>
+                        <button type="button" class="edit_btn" id="edit-1">Edit</button>
+                        <button type="button" class="del_btn" id="delete-1">Delete</button>
+                    </div>
+                    
+                    <div id = "2">
+                        <p id="p2">hello world2</p>
+                        <button type="button" class="edit_btn" id="edit-2">Edit</button>
+                        <button type="button" class="del_btn" id="delete-2">Delete</button>
+                    </div>
+
+                    <div id = "3">
+                        <p id="p3"> hello3</p>
+                        <button type="button" class="edit_btn" id="edit-3">Edit</button>
+                        <button type="button" class="del_btn" id="delete-3">Delete</button>
+                    </div>
+                </div>
+
+                <h2>List of completed tasks</h2>
+                <div id ="completed">
+                                        
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            var m,m2;
+            $("#add_project").click(function () {
+                $("ul").append("<li>ppppp</li>");
+            });
+
+            $("#add_task1").click(function () {
+
+                var assign_id = $("#personal").children().length;
+                console.log(assign_id);
+                assign_id += 1;
+                console.log(assign_id)
+                var content = $("#content").val();
+                console.log(content);
+
+                // $("#personal").append("<div" > </div>");
+
+                $("#personal").append("<div id = " + assign_id + " ></div>");
+                $("#personal div:nth-child("+ assign_id + ")").append("<p " + ">" + content + "</p>");
+                $("#personal #"+ assign_id +" p").attr("id", "p"+assign_id);
+
+                console.log($("#personal p:nth-child(" + assign_id + ")"));
+                console.log("done");
+
+                $("#personal  #"+ assign_id +" p").after("<button type = 'button' class = 'edit_btn'>Edit</buttton");
+                $("#personal #"+ assign_id + "button").attr("id", "edit-" + assign_id);
+                $("#personal  #"+ assign_id +" p" ).after("<button type = 'button' class = 'del_btn' >Delete</button");
+
+                // $("#personal p:nth-child(" + assign_id + ") button").attr("type", "button");
+                //  $("#personal #"+ assign_id + "button").addClass("del_btn");
+                
+                $("#personal #"+ assign_id + " button").attr("id", "delete-" + assign_id)
+              
+            });
+
+            $("#finished").on({click : function(){
+
+            var i =  $(this).parent().remove();
+            $("#completed").append(i);
+            $("#finished").text("complete");
+
+            }, dblclick: function(){
+
+            console.log("called");
+            var j =  $(this).parent().remove();
+            $("#personal").append(j);
+            $("#finished").text("incomplete");
+
+            } 
+            }
+            );
+
+            $(document).on("click", ".del_btn", function () {
+                var n = $(this).attr("id");
+                console.log(n);
+                var n2 = n.split("-");
+                console.log(n2);
+                $("#" + n2[1]).remove();
+
+            })
+
+            $(document).on("click", ".edit_btn", function () {
+                 m = $(this).attr("id");
+                console.log(m);
+                 m2 = m.split("-");
+                console.log(m2);
+
+               console.log($("#" + m2[1]).text());
+               var text = $("#p" + m2[1]).text();
+               console.log(text)
+
+               $("#content").val(text);
+               $("textarea").after("<button type ='button' id = 'ok'>Ok</buttton>");
+               console.log( $("#content").html() );               
+            })
+
+            $(document).on("click", "#ok", function () { 
+                console.log(m2[1])
+                var content = $("#content").val();
+                console.log(content);
+                $("#"+ m2[1] + "  > p  ").text(content);
+                console.log("done");
+                $(this).remove();
+            })
+        });
+
+    </script>
+</body>
+
+</html>
